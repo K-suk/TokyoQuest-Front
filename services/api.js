@@ -1,3 +1,4 @@
+// services/api.js
 import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -14,6 +15,8 @@ export const login = async (accountId, password) => {
         account_id: accountId,
         password,
     });
+    localStorage.setItem('accessToken', response.data.access);
+    localStorage.setItem('refreshToken', response.data.refresh);
     return response.data;
 };
 
@@ -26,6 +29,8 @@ export const logout = async (refreshToken) => {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
             },
         });
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         return response.data;
     } catch (error) {
         console.error('Logout error:', error.response ? error.response.data : error.message);
@@ -48,24 +53,14 @@ export const refreshToken = async () => {
 };
 
 export const getIncompleteQuests = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-        throw new Error('No access token available');
-    }
-
     try {
-        const response = await axios.get(`${API_URL}/quests/incomplete/`, {
-            headers: {
-                'Authorization': `Bearer ${token}` },
-        });
+        const response = await axios.get(`${API_URL}/quests/incomplete/`, getAuthHeaders());
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/quests/incomplete/`, {
-                    headers: { 'Authorization': `Bearer ${newAccessToken}` },
-                });
+                const response = await axios.get(`${API_URL}/quests/incomplete/`, getAuthHeaders());
                 return response.data;
             }
         }
@@ -152,6 +147,129 @@ export const resetPassword = async (uid, token, newPassword) => {
 };
 
 export const completeQuest = async (questId) => {
-    const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, {}, getAuthHeaders());
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, {}, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, {}, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const getQuest = async (questId) => {
+    try {
+        const response = await axios.get(`${API_URL}/quests/${questId}/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/quests/${questId}/`, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const addQuestReview = async (questId, reviewData) => {
+    try {
+        const response = await axios.post(`${API_URL}/quests/${questId}/reviews/add/`, reviewData, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.post(`${API_URL}/quests/${questId}/reviews/add/`, reviewData, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const getQuestReviews = async (questId) => {
+    try {
+        const response = await axios.get(`${API_URL}/quests/${questId}/reviews/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/quests/${questId}/reviews/`, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const claimTicket = async (ticketId) => {
+    try {
+        const response = await axios.post(`${API_URL}/tickets/${ticketId}/claim/`, {}, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.post(`${API_URL}/tickets/${ticketId}/claim/`, {}, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const useTicket = async (issuanceId) => {
+    try {
+        const response = await axios.post(`${API_URL}/tickets/${issuanceId}/use/`, {}, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.post(`${API_URL}/tickets/${issuanceId}/use/`, {}, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const getTickets = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/tickets/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/tickets/`, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
+export const getTicketIssuances = async (ticketId) => {
+    try {
+        const response = await axios.get(`${API_URL}/tickets/${ticketId}/issuances/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/tickets/${ticketId}/issuances/`, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
 };

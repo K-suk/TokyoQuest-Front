@@ -45,7 +45,9 @@ const Home = ({ initialQuests }) => {
             <ul>
                 {quests.map(quest => (
                     <li key={quest.id}>
-                        {quest.title}
+                        <Link href={`/quest/${quest.id}`}>
+                            <p>{quest.title}</p>
+                        </Link>
                         <CompleteQuestButton questId={quest.id} onComplete={handleComplete} />
                     </li>
                 ))}
