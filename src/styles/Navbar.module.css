@@ -1,0 +1,9 @@
+.navbar {
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* コンテンツより上に表示されるように */
+    background-color: #EF454A; /* 背景色を設定 */
+    border-bottom: 1px solid #ccc; /* 下線を追加して区切りを明確にする */
+}

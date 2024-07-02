@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { getProfile, getTickets, claimTicket, useTicket, getTicketIssuances } from '/services/api';
 import ClaimTicketButton from 'components/ClaimTicketButton';
 import UseTicketButton from 'components/UseTicketButton';
-import LogoutButton from 'components/LogoutButton';
 import Link from 'next/link';
+import styles from '../styles/profile.module.css';
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -73,65 +73,81 @@ const Profile = () => {
     console.log('Tickets:', tickets);
 
     return (
-        <div>
-            <h1>Profile</h1>
-            {message && <p>{message}</p>}
-            <p><strong>Account ID:</strong> {profile.account_id}</p>
-            <p><strong>Email:</strong> {profile.email}</p>
-            <p><strong>First Name:</strong> {profile.first_name}</p>
-            <p><strong>Last Name:</strong> {profile.last_name}</p>
-            <p><strong>Contact Address:</strong> {profile.contact_address}</p>
-            <p><strong>Level:</strong> {profile.level}</p>
-            <p><strong>Done:</strong> {profile.done ? 'Yes' : 'No'}</p>
-            <p><strong>Due:</strong> {profile.due}</p>
-            <LogoutButton />
-            <Link href="/edit-profile">
-                <p>Edit Profile</p>
-            </Link>
-            <br />
-            <Link href="/change-password">
-                <p>Change Password</p>
-            </Link>
-            <br />
-            <Link href="/">
-                <p>Back to Home</p>
-            </Link>
-
-            <h2>Available Tickets</h2>
-            {tickets.map(ticket => {
-                console.log(`Checking issued_to for ticket ${ticket.id}:`, ticket.issued_to);
-                const claimedTicket = ticket.issued_to.some(user => user.id === profile.id);
-                const issuance = ticket.issuances ? ticket.issuances.find(issuance => issuance.user.id === profile.id) : null;
-                
-                console.log(`Issuance for ticket ${ticket.id}:`, issuance);
-
-                return (
-                    <div key={ticket.id}>
-                        <p><strong>Ticket:</strong> {ticket.title}</p>
-                        <p>{ticket.description}</p>
-                        {claimedTicket ? (
-                            issuance && !issuance.used ? (
-                                <UseTicketButton 
-                                    issuanceId={issuance.id} 
-                                    onUse={handleUseTicket} 
-                                />
-                            ) : (
-                                <p>Used</p>
-                            )
-                        ) : (
-                            profile.level < ticket.level ? (
-                                <p>Level {ticket.level} to claim</p>
-                            ) : (
-                                <ClaimTicketButton 
-                                    ticketId={ticket.id} 
-                                    onClaim={handleClaimTicket} 
-                                />
-                            )
-                        )}
+        <>
+            <style jsx global>{`
+                body {
+                    background: rgb(99, 39, 120);
+                }
+            `}</style>
+            <div className="container rounded bg-white mt-5 mb-5">
+                <div className="row">
+                    <div className="col-md-3 border-right">
+                        <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+                            <img className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="Profile" />
+                            <span className="font-weight-bold">{profile.first_name} {profile.last_name}</span>
+                            <span className="text-black-50">{profile.email}</span>
+                        </div>
                     </div>
-                );
-            })}
-        </div>
+                    <div className="col-md-5 border-right">
+                        <div className="p-3 py-5">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h4 className="text-right">Profile Settings</h4>
+                            </div>
+                            <div className="row mt-2">
+                                <div className="col-md-6"><label className={`labels ${styles.labels}`}>First Name</label><h3>{profile.first_name}</h3></div>
+                                <div className="col-md-6"><label className={`labels ${styles.labels}`}>Last Name</label><h3>{profile.last_name}</h3></div>
+                            </div>
+                            <div className="row mt-3">
+                                <div className="col-md-12"><label className={`labels ${styles.labels}`}>Contact Address</label><h3>{profile.contact_address}</h3></div>
+                                <div className="col-md-12"><label className={`labels ${styles.labels}`}>Level</label><h3>{profile.level}</h3></div>
+                                <div className="col-md-12"><label className={`labels ${styles.labels}`}>Due</label><h3>{profile.due}</h3></div>
+                            </div>
+                            <Link href="/edit-profile">
+                                <div className="mt-5 text-center"><button className={`btn btn-primary profile-button ${styles.profileButton}`} type="button">Edit Profile</button></div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="p-3 py-5">
+                            <div className="d-flex justify-content-between align-items-center experience"><span>Tickets</span></div><br />
+                            {tickets.map(ticket => {
+                                console.log(`Checking issued_to for ticket ${ticket.id}:`, ticket.issued_to);
+                                const claimedTicket = ticket.issued_to.some(user => user.id === profile.id);
+                                const issuance = ticket.issuances ? ticket.issuances.find(issuance => issuance.user.id === profile.id) : null;
+                                
+                                console.log(`Issuance for ticket ${ticket.id}:`, issuance);
+
+                                return (
+                                    <div key={ticket.id}>
+                                        <p><strong>Ticket:</strong> {ticket.title}</p>
+                                        <p>{ticket.description}</p>
+                                        {claimedTicket ? (
+                                            issuance && !issuance.used ? (
+                                                <UseTicketButton 
+                                                    issuanceId={issuance.id} 
+                                                    onUse={handleUseTicket} 
+                                                />
+                                            ) : (
+                                                <button className='btn btn-outline-dark mt-auto uniform-width'>Used</button>
+                                            )
+                                        ) : (
+                                            profile.level < ticket.level ? (
+                                                <button className='btn btn-outline-dark mt-auto uniform-width'>Level {ticket.level} to claim</button>
+                                            ) : (
+                                                <ClaimTicketButton 
+                                                    ticketId={ticket.id} 
+                                                    onClaim={handleClaimTicket} 
+                                                />
+                                            )
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 

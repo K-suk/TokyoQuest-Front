@@ -273,3 +273,30 @@ export const getTicketIssuances = async (ticketId) => {
         throw error;
     }
 };
+
+// services/api.js
+export const searchQuestsByTag = async (tag) => {
+    console.log(`Searching quests by tag: ${tag}`);
+    try {
+        const response = await axios.get(`${API_URL}/quests/search/`, {
+            params: { tag },
+            headers: getAuthHeaders().headers  // 修正点
+        });
+        console.log(`Received response:`, response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error searching quests:', error);
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/quests/search/`, {
+                    params: { tag },
+                    headers: getAuthHeaders().headers  // 修正点
+                });
+                console.log(`Received response after refresh:`, response.data);
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};

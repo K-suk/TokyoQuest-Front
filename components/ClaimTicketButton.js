@@ -22,7 +22,7 @@ const ClaimTicketButton = ({ ticketId, onClaim }) => {
     };
 
     return (
-        <button onClick={handleClaimTicket} disabled={isLoading}>
+        <button onClick={handleClaimTicket} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
             {isLoading ? 'Claiming...' : 'Claim Ticket'}
         </button>
     );

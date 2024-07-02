@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { logout, refreshToken } from '/services/api';
 
 const LogoutButton = () => {
@@ -17,7 +16,7 @@ const LogoutButton = () => {
             await logout(refreshTokenValue);
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            router.push('/login'); // ログアウト後にログインページに遷移
+            router.push('/login');
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 const newAccessToken = await refreshToken();
@@ -27,7 +26,7 @@ const LogoutButton = () => {
                         await logout(refreshTokenValue);
                         localStorage.removeItem('accessToken');
                         localStorage.removeItem('refreshToken');
-                        router.push('/login'); // ログアウト後にログインページに遷移
+                        router.push('/login');
                     } catch (logoutError) {
                         console.error('Error logging out after token refresh:', logoutError.response ? logoutError.response.data : logoutError.message);
                     }
@@ -39,9 +38,9 @@ const LogoutButton = () => {
     };
 
     return (
-        <button onClick={handleLogout}>
+        <a className='nav-link' onClick={handleLogout} style={{ cursor: 'pointer' }}>
             Logout
-        </button>
+        </a>
     );
 };
 

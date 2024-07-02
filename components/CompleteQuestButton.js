@@ -22,7 +22,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
     };
 
     return (
-        <button onClick={handleCompleteQuest} disabled={isLoading}>
+        <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
             {isLoading ? 'Completing...' : 'Complete Quest'}
         </button>
     );

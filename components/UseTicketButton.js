@@ -22,7 +22,7 @@ const UseTicketButton = ({ issuanceId, onUse }) => {
     };
 
     return (
-        <button onClick={handleUseTicket} disabled={isLoading}>
+        <button onClick={handleUseTicket} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
             {isLoading ? 'Using...' : 'Use Ticket'}
         </button>
     );
