@@ -178,6 +178,22 @@ export const getQuest = async (questId) => {
     }
 };
 
+export const getCompletedQuests = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/completed-quests/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/completed-quests/`, getAuthHeaders());
+                return response.data;
+            }
+        }
+        throw error;
+    }
+};
+
 export const addQuestReview = async (questId, reviewData) => {
     try {
         const response = await axios.post(`${API_URL}/quests/${questId}/reviews/add/`, reviewData, getAuthHeaders());

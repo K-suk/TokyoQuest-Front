@@ -8,6 +8,7 @@ import styles from 'src/styles/questDetail.module.css';
 const QuestDetail = () => {
     const [quest, setQuest] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
     const router = useRouter();
     const { id } = router.query;
 
@@ -21,6 +22,12 @@ const QuestDetail = () => {
 
                 const reviewsData = await getQuestReviews(id);
                 setReviews(reviewsData);
+
+                if (reviewsData.length > 0) {
+                    const totalRating = reviewsData.reduce((acc, review) => acc + review.rating, 0);
+                    const avgRating = totalRating / reviewsData.length;
+                    setAverageRating(avgRating);
+                }
             } catch (error) {
                 console.error('Error fetching quest or reviews:', error);
             }
@@ -31,6 +38,9 @@ const QuestDetail = () => {
 
     const handleReviewSubmitted = (newReview) => {
         setReviews([...reviews, newReview]);
+        const newTotalRating = reviews.reduce((acc, review) => acc + review.rating, 0) + newReview.rating;
+        const newAvgRating = newTotalRating / (reviews.length + 1);
+        setAverageRating(newAvgRating);
     };
 
     if (!quest) {
@@ -202,19 +212,27 @@ const QuestDetail = () => {
                         <div className="col-md-5">
                             <img src="https://www.bootdey.com/image/400x300/FFB6C1/000000" alt="project-image" className="rounded" />
                             <div className={styles["project-info-box"]}>
-                                <p className='content-p'><b>Tags:</b> {quest.tags.map(tag => tag.name).join(', ')}</p>
+                                <p className='content-p'><b>Tags:</b>
+                                    {quest.tags && (
+                                        <div>
+                                            {quest.tags.map(tag => (
+                                                <span key={tag.id} className="badge bg-secondary me-1">{tag.name}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </p>
                             </div>
                         </div>
                         <div className="col-md-7">
                             <div className={`${styles["project-info-box"]} mt-0`}>
-                                <h2>PROJECT DETAILS</h2>
+                                <h2>QUEST DETAILS</h2>
                                 <p className="mb-0 content-p">{quest.description}</p>
                             </div>
                             <div className={styles["project-info-box"]}>
                                 <p className='content-p'><b>Title:</b> {quest.title}</p>
-                                <p className='content-p'><b>Avg review:</b> {quest.rate}</p>
+                                <p className='content-p'><b>Avg review:</b> {averageRating.toFixed(1)}</p>
                                 <p className='content-p'><b>Location:</b> {quest.location}</p>
-                                <p className="mb-0 content-p"><b>Budget:</b> Free</p>
+                                <p className="mb-0 content-p"><b>Budget:</b> ${quest.badget}</p>
                             </div>
                         </div>
                     </div>

@@ -20,6 +20,11 @@ const Navbar = () => {
                                 <a className="nav-link">Profile</a>
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link href="/completed-quests" legacyBehavior>
+                                <a className="nav-link">Completed Quests</a>
+                            </Link>
+                        </li>
                         {/* <li className="nav-item dropdown">
                             <Link href="#" legacyBehavior>
                                 <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
