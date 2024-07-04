@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }) => {
                 placeholder="Search by tag..." 
                 className={styles.searchInput}
             />
-            <button type="submit" className={styles.searchButton}>Search</button>
+            <button type="submit" className={styles.searchButton} style={{ backgroundColor: '#EF454A' }}>Search</button>
         </form>
     );
 };

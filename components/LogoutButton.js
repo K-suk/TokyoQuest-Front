@@ -38,7 +38,7 @@ const LogoutButton = () => {
     };
 
     return (
-        <a className='nav-link' onClick={handleLogout} style={{ cursor: 'pointer' }}>
+        <a className='nav-link' onClick={handleLogout} style={{ cursor: 'pointer', color: '#fff' }}>
             Logout
         </a>
     );

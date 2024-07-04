@@ -44,7 +44,7 @@ const PasswordResetRequest = () => {
                             </span>
                         </div>
                         <div className="form-group mt-2">
-                            <button type="submit" className="btn btn-success btn-lg float-right" disabled={isSubmitting}>
+                            <button type="submit" className="btn btn-lg float-right" disabled={isSubmitting} style={{ backgroundColor: '#EF454A', color: '#fff' }}>
                                 {isSubmitting ? 'Sending...' : 'Reset'}
                             </button>
                         </div>

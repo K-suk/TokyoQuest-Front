@@ -4,7 +4,6 @@ import { getCompletedQuests } from '/services/api';
 import Head from 'next/head';
 import Link from 'next/link';
 import SearchBar from 'components/SearchBar'; // Adjust the import path as necessary
-import CompleteQuestButton from 'components/CompleteQuestButton'; // Adjust the import path as necessary
 
 const CompletedQuests = () => {
     const [quests, setQuests] = useState([]);
@@ -52,7 +51,7 @@ const CompletedQuests = () => {
                             {filteredQuests.map(completedQuest => (
                                 <div key={completedQuest.id} className="col mb-5">
                                     <div className="card h-100">
-                                        <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                        <img className="card-img-top" src={completedQuest.quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"} alt={completedQuest.title} />
                                         <div className="card-body p-4">
                                             <div className="text-center">
                                                 <h5 className="fw-bolder">{completedQuest.quest.title}</h5>

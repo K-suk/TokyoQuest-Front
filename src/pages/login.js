@@ -7,6 +7,7 @@ import Head from 'next/head';
 const Login = () => {
     const [accountId, setAccountId] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // エラー状態を追加
     const router = useRouter();
 
     const handleSubmit = async (event) => {
@@ -18,6 +19,7 @@ const Login = () => {
             router.push('/'); // ログイン後にホームページに遷移
         } catch (error) {
             console.error('Error logging in:', error.response ? error.response.data : error.message);
+            setError('Invalid account ID or password. Please try again.'); // エラーメッセージを設定
         }
     };
 
@@ -31,9 +33,11 @@ const Login = () => {
                 <div className="container py-5 h-100">
                     <div className="row d-flex align-items-center justify-content-center h-100">
                         <div className="col-md-8 col-lg-7 col-xl-6">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt="Phone image" />
+                            <img src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png" className="img-fluid" alt="Phone image" style={{ width: '500px', height: '500px' }} />
                         </div>
                         <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                            <h1 className="mb-4">Login</h1>
+                            {error && <div className="alert alert-danger" role="alert">{error}</div>} {/* エラーメッセージ表示 */}
                             <form onSubmit={handleSubmit}>
                                 {/* Account ID input */}
                                 <div className="form-outline mb-4">
@@ -69,7 +73,7 @@ const Login = () => {
                                 </div>
 
                                 {/* Submit button */}
-                                <button type="submit" className="btn btn-primary btn-lg btn-block w-100">Sign in</button>
+                                <button type="submit" className="btn btn-lg btn-block w-100" style={{ backgroundColor: '#EF454A', color: '#fff' }}>Sign in</button>
                             </form>
                         </div>
                     </div>

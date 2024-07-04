@@ -76,7 +76,7 @@ const Profile = () => {
         <>
             <style jsx global>{`
                 body {
-                    background: rgb(99, 39, 120);
+                    background: rgb(239, 69, 74);
                 }
             `}</style>
             <div className="container rounded bg-white mt-5 mb-5">
@@ -103,7 +103,7 @@ const Profile = () => {
                                 <div className="col-md-12"><label className={`labels ${styles.labels}`}>Due</label><h3>{profile.due}</h3></div>
                             </div>
                             <Link href="/edit-profile">
-                                <div className="mt-5 text-center"><button className={`btn btn-primary profile-button ${styles.profileButton}`} type="button">Edit Profile</button></div>
+                                <div className="mt-5 text-center"><button className={`btn profile-button ${styles.profileButton}`} type="button" style={{ backgroundColor: '#EF454A', color: '#fff' }}>Edit Profile</button></div>
                             </Link>
                         </div>
                     </div>

@@ -316,3 +316,27 @@ export const searchQuestsByTag = async (tag) => {
         throw error;
     }
 };
+
+export const getReports = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/quests/reports/`, getAuthHeaders());
+        if (Array.isArray(response.data)) {
+            return response.data;
+        } else {
+            return [response.data]; // データがオブジェクトの場合、配列に変換
+        }
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                const response = await axios.get(`${API_URL}/quests/reports/`, getAuthHeaders());
+                if (Array.isArray(response.data)) {
+                    return response.data;
+                } else {
+                    return [response.data]; // データがオブジェクトの場合、配列に変換
+                }
+            }
+        }
+        throw error;
+    }
+};
