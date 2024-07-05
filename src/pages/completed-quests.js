@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { getCompletedQuests } from '/services/api';
 import Head from 'next/head';
 import Link from 'next/link';
-import SearchBar from 'components/SearchBar'; // Adjust the import path as necessary
+import Image from 'next/image';
+import SearchBar from 'components/SearchBar';
 
 const CompletedQuests = () => {
     const [quests, setQuests] = useState([]);

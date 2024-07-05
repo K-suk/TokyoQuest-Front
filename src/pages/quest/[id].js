@@ -293,6 +293,7 @@ import { ReviewFormWithStyle } from 'components/ReviewForm';
 import Head from 'next/head';
 import styles from 'src/styles/questDetail.module.css';
 import DOMPurify from 'dompurify';
+import Image from 'next/image'; // 追加
 
 const QuestDetail = () => {
     const [quest, setQuest] = useState(null);

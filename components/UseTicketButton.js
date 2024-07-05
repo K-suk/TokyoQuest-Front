@@ -1,18 +1,18 @@
 // components/UseTicketButton.js
 import { useState } from 'react';
-import { useTicket } from '/services/api';
+import { useTicket as fetchTicket } from '/services/api';
 
 const UseTicketButton = ({ issuanceId, onUse }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleUseTicket = async (event) => {
-        event.stopPropagation(); // イベントのバブリングを防止
-        if (isLoading) return; // リクエストが進行中の場合、再度リクエストを送信しない
+        event.stopPropagation();
+        if (isLoading) return;
         setIsLoading(true);
         try {
-            await useTicket(issuanceId); // useTicket関数を呼び出す
+            await fetchTicket(issuanceId); // ここでエイリアスを使用
             if (onUse) {
-                onUse(issuanceId); // チケット使用後のコールバックを呼び出す
+                onUse(issuanceId);
             }
         } catch (error) {
             console.error('Error using ticket:', error);

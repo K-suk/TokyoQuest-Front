@@ -6,6 +6,7 @@ import CompleteQuestButton from '/components/CompleteQuestButton';
 import Link from 'next/link';
 import SearchBar from '/components/SearchBar';
 import Head from 'next/head';
+import Image from 'next/image'; // 追加
 
 const Home = ({ initialQuests }) => {
     const [quests, setQuests] = useState(initialQuests);
@@ -34,7 +35,7 @@ const Home = ({ initialQuests }) => {
         };
 
         fetchData();
-    }, []);
+    }, [router]);
 
     const handleComplete = (questId) => {
         setQuests((prevQuests) => prevQuests.filter((quest) => quest.id !== questId));

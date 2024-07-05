@@ -5,6 +5,7 @@ import ClaimTicketButton from 'components/ClaimTicketButton';
 import UseTicketButton from 'components/UseTicketButton';
 import Link from 'next/link';
 import styles from '../styles/profile.module.css';
+import Image from 'next/image'; // 追加
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
