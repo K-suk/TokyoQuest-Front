@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { getProfile, getTickets, claimTicket, useTicket, getTicketIssuances } from '/services/api';
+import { getProfile, getTickets, claimTicket, useTicket as fetchTicket, getTicketIssuances } from '/services/api';
 import ClaimTicketButton from 'components/ClaimTicketButton';
 import UseTicketButton from 'components/UseTicketButton';
 import Link from 'next/link';
@@ -53,7 +53,7 @@ const Profile = () => {
 
     const handleUseTicket = useCallback(async (issuanceId) => {
         try {
-            await useTicket(issuanceId);
+            await fetchTicket(issuanceId);
             setTickets(prevTickets => prevTickets.map(ticket => ({
                 ...ticket,
                 issuances: ticket.issuances.map(issuance => 

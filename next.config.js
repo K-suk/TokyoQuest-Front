@@ -11,7 +11,7 @@ module.exports = {
     return [
       {
         source: '/(.*)',
-        destination: 'https://tokyoquest-front-j8g04gx3p-kosukes-projects-11574484.vercel.app/$1',
+        destination: 'https://tokyoquest-front-e2jzgad1x-kosukes-projects-11574484.vercel.app',
         permanent: true,
       },
     ];
