@@ -10,7 +10,7 @@ const UseTicketButton = ({ issuanceId, onUse }) => {
         if (isLoading) return; // リクエストが進行中の場合、再度リクエストを送信しない
         setIsLoading(true);
         try {
-            const response = await useTicket(issuanceId);
+            await useTicket(issuanceId); // useTicket関数を呼び出す
             if (onUse) {
                 onUse(issuanceId); // チケット使用後のコールバックを呼び出す
             }
