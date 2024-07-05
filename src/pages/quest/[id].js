@@ -499,10 +499,12 @@ const QuestDetail = () => {
                 <div className="container mt-4">
                     <div className="row">
                         <div className="col-md-5">
-                            <img
+                            <Image
                                 src={quest.imgUrl || "https://www.bootdey.com/image/400x300/FFB6C1/000000"}
                                 alt="project-image"
                                 className="rounded"
+                                width={400}
+                                height={300}
                                 style={{ width: '400px', height: '300px' }}
                             />
                             <div className={styles["project-info-box"]}>

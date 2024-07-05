@@ -51,7 +51,13 @@ const CompletedQuests = () => {
                             {filteredQuests.map(completedQuest => (
                                 <div key={completedQuest.id} className="col mb-5">
                                     <div className="card h-100">
-                                        <img className="card-img-top" src={completedQuest.quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"} alt={completedQuest.title} />
+                                        <Image
+                                            className="card-img-top"
+                                            src={completedQuest.quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"}
+                                            alt={completedQuest.title}
+                                            width={450}
+                                            height={300}
+                                        />
                                         <div className="card-body p-4">
                                             <div className="text-center">
                                                 <h5 className="fw-bolder">{completedQuest.quest.title}</h5>
