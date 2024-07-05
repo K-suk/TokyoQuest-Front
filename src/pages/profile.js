@@ -83,7 +83,13 @@ const Profile = () => {
                 <div className="row">
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <img className="rounded-circle mt-5" width="150px" src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png" alt="Profile" />
+                            <Image
+                                className="rounded-circle mt-5"
+                                width={150}
+                                height={150}
+                                src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png"
+                                alt="Profile"
+                            />
                             <span className="font-weight-bold">{profile.first_name} {profile.last_name}</span>
                             <span className="text-black-50">{profile.email}</span>
                         </div>

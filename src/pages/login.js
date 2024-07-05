@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { login } from '/services/api';
 import Link from 'next/link';
 import Head from 'next/head';
+import Image from 'next/image';
 
 const Login = () => {
     const [accountId, setAccountId] = useState('');
@@ -33,7 +34,14 @@ const Login = () => {
                 <div className="container py-5 h-100">
                     <div className="row d-flex align-items-center justify-content-center h-100">
                         <div className="col-md-8 col-lg-7 col-xl-6">
-                            <img src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png" className="img-fluid" alt="Phone image" style={{ width: '500px', height: '500px' }} />
+                            <Image
+                                src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png"
+                                className="img-fluid"
+                                alt="Phone image"
+                                width={500}
+                                height={500}
+                                style={{ width: '500px', height: '500px' }}
+                            />
                         </div>
                         <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                             <h1 className="mb-4">Login</h1>
