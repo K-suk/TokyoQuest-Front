@@ -1,7 +1,7 @@
 // services/api.js
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = 'https://tokyoquest.onrender.com/api';  // 環境変数の代わりに直接URLを設定
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');
@@ -290,7 +290,6 @@ export const getTicketIssuances = async (ticketId) => {
     }
 };
 
-// services/api.js
 export const searchQuestsByTag = async (tag) => {
     console.log(`Searching quests by tag: ${tag}`);
     try {
