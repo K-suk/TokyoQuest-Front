@@ -11,13 +11,27 @@ const getAuthHeaders = () => {
 };
 
 export const login = async (accountId, password) => {
-    const response = await axios.post(`${API_URL}/accounts/login/`, {
-        account_id: accountId,
-        password,
-    });
-    localStorage.setItem('accessToken', response.data.access);
-    localStorage.setItem('refreshToken', response.data.refresh);
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/accounts/login/`, {
+            account_id: accountId,
+            password,
+        });
+        localStorage.setItem('accessToken', response.data.access);
+        localStorage.setItem('refreshToken', response.data.refresh);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            // サーバーからのレスポンスがある場合
+            console.error('Server responded with:', error.response.data);
+        } else if (error.request) {
+            // リクエストはサーバーに送信されたが、レスポンスがない場合
+            console.error('No response received:', error.request);
+        } else {
+            // リクエストの設定中にエラーが発生した場合
+            console.error('Error setting up request:', error.message);
+        }
+        throw error;
+    }
 };
 
 export const logout = async (refreshToken) => {
