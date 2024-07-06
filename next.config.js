@@ -6,7 +6,7 @@ module.exports = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://tokyoquest.onrender.com; font-src 'self';",
+            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://tokyoquest.onrender.com; frame-src 'self';",
           },
           {
             key: 'X-Content-Type-Options',
