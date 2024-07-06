@@ -1,21 +1,4 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   reactStrictMode: true,
-// }
-
-// module.exports = nextConfig
-
-
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/(.*)',
-        destination: 'https://tokyoquest-front-e2jzgad1x-kosukes-projects-11574484.vercel.app',
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     return [
       {
