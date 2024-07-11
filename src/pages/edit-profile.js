@@ -62,7 +62,7 @@ const EditProfile = () => {
         <>
             <style jsx global>{`
                 body {
-                    background: rgb(99, 39, 120);
+                    background: rgb(239, 69, 74);
                 }
             `}</style>
             <div className="container rounded bg-white mt-5 mb-5">
@@ -74,7 +74,7 @@ const EditProfile = () => {
                                     className="rounded-circle mt-5"
                                     width={150}
                                     height={150}
-                                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                                    src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png"
                                     alt="Profile"
                                 />
                                 <span className="font-weight-bold">{profile.first_name} {profile.last_name}</span>
