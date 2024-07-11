@@ -13,6 +13,12 @@ const MediaUploadModal = ({ questId, onComplete, onClose }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (!media) {
+            setMessage('Please select a media file before submitting.');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('media', media);
 
