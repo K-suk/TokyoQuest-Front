@@ -161,12 +161,11 @@ export const resetPassword = async (uid, token, newPassword) => {
 };
 
 export const completeQuest = async (questId, media) => {
-    try {
-        const formData = new FormData();
-        formData.append('media', media);
+    const formData = new FormData();
+    formData.append('media', media);
 
+    try {
         const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
-            ...getAuthHeaders(),
             headers: {
                 ...getAuthHeaders().headers,
                 'Content-Type': 'multipart/form-data',
@@ -178,9 +177,8 @@ export const completeQuest = async (questId, media) => {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
                 const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
-                    ...getAuthHeaders(),
                     headers: {
-                        ...getAuthHeaders().headers,
+                        'Authorization': `Bearer ${newAccessToken}`,
                         'Content-Type': 'multipart/form-data',
                     },
                 });
