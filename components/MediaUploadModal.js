@@ -15,7 +15,7 @@ const MediaUploadModal = ({ questId, onComplete, onClose }) => {
         event.preventDefault();
 
         if (!media) {
-            setMessage('Please select a media file before submitting.');
+            setMessage('Please select a media file before completing the quest.');
             return;
         }
 
