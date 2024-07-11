@@ -1,24 +1,36 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Modal from 'react-modal'; // 追加
 import { completeQuest } from '../services/api';
-import Modal from 'react-modal'; // 追加部分
+
+// モーダルのスタイル
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
 
 const CompleteQuestButton = ({ questId, onComplete }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [mediaFile, setMediaFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleCompleteQuest = async (event) => {
-        event.stopPropagation();
-        if (isLoading) return;
+        event.stopPropagation(); // イベントのバブリングを防止
+        if (isLoading) return; // リクエストが進行中の場合、再度リクエストを送信しない
         setIsLoading(true);
         try {
             const formData = new FormData();
-            formData.append('media', mediaFile);
+            formData.append('media', selectedFile);
             await completeQuest(questId, formData);
             if (onComplete) {
-                onComplete(questId);
+                onComplete(questId); // クエスト完了後のコールバックを呼び出す
             }
-            setModalIsOpen(false);
+            closeModal();
         } catch (error) {
             console.error('Error completing quest:', error);
         } finally {
@@ -26,22 +38,35 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         }
     };
 
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
     const handleFileChange = (event) => {
-        setMediaFile(event.target.files[0]);
+        setSelectedFile(event.target.files[0]);
     };
 
     return (
         <>
-            <button onClick={() => setModalIsOpen(true)} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
+            <button onClick={openModal} className="btn btn-outline-dark mt-auto uniform-width">
                 {isLoading ? 'Completing...' : 'Complete Quest'}
             </button>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Upload Media"
+            >
                 <h2>Upload Media</h2>
                 <input type="file" onChange={handleFileChange} />
-                <button onClick={handleCompleteQuest} disabled={isLoading || !mediaFile}>
-                    {isLoading ? 'Completing...' : 'Submit'}
+                <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
+                    {isLoading ? 'Uploading...' : 'Upload and Complete'}
                 </button>
-                <button onClick={() => setModalIsOpen(false)}>Cancel</button>
+                <button onClick={closeModal}>Close</button>
             </Modal>
         </>
     );
