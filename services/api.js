@@ -160,15 +160,30 @@ export const resetPassword = async (uid, token, newPassword) => {
     }
 };
 
-export const completeQuest = async (questId) => {
+export const completeQuest = async (questId, media) => {
     try {
-        const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, {}, getAuthHeaders());
+        const formData = new FormData();
+        formData.append('media', media);
+
+        const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
+            ...getAuthHeaders(),
+            headers: {
+                ...getAuthHeaders().headers,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, {}, getAuthHeaders());
+                const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
+                    ...getAuthHeaders(),
+                    headers: {
+                        ...getAuthHeaders().headers,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 return response.data;
             }
         }

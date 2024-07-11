@@ -7,9 +7,12 @@ import Link from 'next/link';
 import SearchBar from '/components/SearchBar';
 import Head from 'next/head';
 import Image from 'next/image'; // 追加
+import MediaUploadModal from '/components/MediaUploadModal'; // 追加
 
 const Home = ({ initialQuests }) => {
     const [quests, setQuests] = useState(initialQuests);
+    const [showModal, setShowModal] = useState(false); // モーダルの状態を管理するステート
+    const [currentQuestId, setCurrentQuestId] = useState(null); // 現在選択されているクエストIDを管理するステート
     const router = useRouter();
 
     useEffect(() => {
@@ -48,6 +51,16 @@ const Home = ({ initialQuests }) => {
         } catch (error) {
             console.error('Error searching quests:', error);
         }
+    };
+
+    const handleOpenModal = (questId) => {
+        setCurrentQuestId(questId);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setCurrentQuestId(null);
     };
 
     return (
@@ -109,6 +122,7 @@ const Home = ({ initialQuests }) => {
                     </div>
                 </div>
             </section>
+            {showModal && <MediaUploadModal questId={currentQuestId} onComplete={handleComplete} onClose={handleCloseModal} />}
         </div>
     );
 };
