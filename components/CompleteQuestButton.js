@@ -18,9 +18,14 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [message, setMessage] = useState('');
 
     const handleCompleteQuest = async (event) => {
         event.stopPropagation(); // イベントのバブリングを防止
+        if (!selectedFile) {
+            setMessage('Please select a file to upload.');
+            return;
+        }
         if (isLoading) return; // リクエストが進行中の場合、再度リクエストを送信しない
         setIsLoading(true);
         try {
@@ -33,6 +38,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
             closeModal();
         } catch (error) {
             console.error('Error completing quest:', error);
+            setMessage('Error completing quest. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -44,10 +50,13 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
 
     const closeModal = () => {
         setModalIsOpen(false);
+        setMessage('');
+        setSelectedFile(null);
     };
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
+        setMessage('');
     };
 
     return (
@@ -63,6 +72,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
             >
                 <h2>Upload Media</h2>
                 <input type="file" onChange={handleFileChange} />
+                {message && <p style={{ color: 'red' }}>{message}</p>}
                 <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
                     {isLoading ? 'Uploading...' : 'Upload and Complete'}
                 </button>
