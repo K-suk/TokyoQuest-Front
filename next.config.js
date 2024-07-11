@@ -6,7 +6,7 @@ module.exports = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://tokyoquest.onrender.com; frame-src 'self';",
+            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src 'self' https://tokyoquest.onrender.com; frame-src 'self';",
           },
           {
             key: 'X-Content-Type-Options',
@@ -31,5 +31,8 @@ module.exports = {
         ],
       },
     ];
+  },
+  images: {
+    domains: ['dummyimage.com', 'lh3.googleusercontent.com'],
   },
 };
