@@ -20,16 +20,7 @@ export const login = async (accountId, password) => {
         localStorage.setItem('refreshToken', response.data.refresh);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            // サーバーからのレスポンスがある場合
-            console.error('Server responded with:', error.response.data);
-        } else if (error.request) {
-            // リクエストはサーバーに送信されたが、レスポンスがない場合
-            console.error('No response received:', error.request);
-        } else {
-            // リクエストの設定中にエラーが発生した場合
-            console.error('Error setting up request:', error.message);
-        }
+        console.error('Login error:', error.response ? error.response.data : error.message);
         throw error;
     }
 };
@@ -38,11 +29,7 @@ export const logout = async (refreshToken) => {
     try {
         const response = await axios.post(`${API_URL}/accounts/logout/`, {
             refresh: refreshToken
-        }, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        });
+        }, getAuthHeaders());
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         return response.data;
@@ -61,6 +48,8 @@ export const refreshToken = async () => {
             return response.data.access;
         } catch (error) {
             console.error('Error refreshing token:', error.response ? error.response.data : error.message);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
         }
     }
     return null;
@@ -74,8 +63,7 @@ export const getIncompleteQuests = async () => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/quests/incomplete/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/quests/incomplete/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -90,8 +78,7 @@ export const getProfile = async () => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/accounts/profile/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/accounts/profile/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -106,8 +93,7 @@ export const updateProfile = async (profileData) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.put(`${API_URL}/accounts/profile/update/`, profileData, getAuthHeaders());
-                return response.data;
+                return await axios.put(`${API_URL}/accounts/profile/update/`, profileData, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -125,11 +111,10 @@ export const changePassword = async (currentPassword, newPassword) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.put(`${API_URL}/accounts/profile/change-password/`, {
+                return await axios.put(`${API_URL}/accounts/profile/change-password/`, {
                     current_password: currentPassword,
                     new_password: newPassword
-                }, getAuthHeaders());
-                return response.data;
+                }, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -143,7 +128,7 @@ export const requestPasswordReset = async (email) => {
 
 export const resetPassword = async (uid, token, newPassword) => {
     try {
-        console.log(`Sending request with UID: ${uid}, Token: ${token}, New Password: ${newPassword}`);  // リクエストデータをログに出力
+        console.log(`Sending request with UID: ${uid}, Token: ${token}, New Password: ${newPassword}`);
         const response = await axios.post(`${API_URL}/accounts/password-reset/`, {
             uid: uid,
             token: token,
@@ -176,13 +161,12 @@ export const completeQuest = async (questId, media) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
+                return await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
                     headers: {
                         'Authorization': `Bearer ${newAccessToken}`,
                         'Content-Type': 'multipart/form-data',
                     },
-                });
-                return response.data;
+                }).then(response => response.data);
             }
         }
         throw error;
@@ -197,8 +181,7 @@ export const getQuest = async (questId) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/quests/${questId}/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/quests/${questId}/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -213,8 +196,7 @@ export const getCompletedQuests = async () => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/completed-quests/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/completed-quests/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -229,8 +211,7 @@ export const addQuestReview = async (questId, reviewData) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.post(`${API_URL}/quests/${questId}/reviews/add/`, reviewData, getAuthHeaders());
-                return response.data;
+                return await axios.post(`${API_URL}/quests/${questId}/reviews/add/`, reviewData, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -245,8 +226,7 @@ export const getQuestReviews = async (questId) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/quests/${questId}/reviews/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/quests/${questId}/reviews/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -261,8 +241,7 @@ export const claimTicket = async (ticketId) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.post(`${API_URL}/tickets/${ticketId}/claim/`, {}, getAuthHeaders());
-                return response.data;
+                return await axios.post(`${API_URL}/tickets/${ticketId}/claim/`, {}, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -277,8 +256,7 @@ export const useTicket = async (issuanceId) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.post(`${API_URL}/tickets/${issuanceId}/use/`, {}, getAuthHeaders());
-                return response.data;
+                return await axios.post(`${API_URL}/tickets/${issuanceId}/use/`, {}, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -293,8 +271,7 @@ export const getTickets = async () => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/tickets/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/tickets/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -309,8 +286,7 @@ export const getTicketIssuances = async (ticketId) => {
         if (error.response && error.response.status === 401) {
             const newAccessToken = await refreshToken();
             if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/tickets/${ticketId}/issuances/`, getAuthHeaders());
-                return response.data;
+                return await axios.get(`${API_URL}/tickets/${ticketId}/issuances/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;
@@ -322,7 +298,7 @@ export const searchQuestsByTag = async (tag) => {
     try {
         const response = await axios.get(`${API_URL}/quests/search/`, {
             params: { tag },
-            headers: getAuthHeaders().headers  // 修正点
+            headers: getAuthHeaders().headers
         });
         console.log(`Received response:`, response.data);
         return response.data;
@@ -333,7 +309,7 @@ export const searchQuestsByTag = async (tag) => {
             if (newAccessToken) {
                 const response = await axios.get(`${API_URL}/quests/search/`, {
                     params: { tag },
-                    headers: getAuthHeaders().headers  // 修正点
+                    headers: getAuthHeaders().headers
                 });
                 console.log(`Received response after refresh:`, response.data);
                 return response.data;
@@ -349,7 +325,7 @@ export const getReports = async () => {
         if (Array.isArray(response.data)) {
             return response.data;
         } else {
-            return [response.data]; // データがオブジェクトの場合、配列に変換
+            return [response.data];
         }
     } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -359,7 +335,7 @@ export const getReports = async () => {
                 if (Array.isArray(response.data)) {
                     return response.data;
                 } else {
-                    return [response.data]; // データがオブジェクトの場合、配列に変換
+                    return [response.data];
                 }
             }
         }
