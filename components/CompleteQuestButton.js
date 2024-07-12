@@ -29,15 +29,8 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         }
         setIsLoading(true);
         try {
-            const formData = new FormData();
-            formData.append('media', selectedFile);
-    
-            // FormDataの内容を確認
-            for (let [key, value] of formData.entries()) { 
-                console.log('formDataCQ:', key, value);
-            }
-    
-            await completeQuest(questId, formData);
+            // selectedFileを直接completeQuest関数に渡す
+            await completeQuest(questId, selectedFile);
             if (onComplete) {
                 onComplete(questId);
             }
