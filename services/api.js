@@ -149,7 +149,13 @@ export const completeQuest = async (questId, media) => {
     const formData = new FormData();
     formData.append('media', media);
 
+    // FormDataの内容をログに出力
+    for (let [key, value] of formData.entries()) { 
+        console.log(key, value);
+    }
+
     try {
+        console.log('Sending FormData:', formData);
         const response = await axios.post(`${API_URL}/quests/${questId}/complete/`, formData, {
             headers: {
                 ...getAuthHeaders().headers,
@@ -169,6 +175,7 @@ export const completeQuest = async (questId, media) => {
                 }).then(response => response.data);
             }
         }
+        console.error('Error completing quest:', error);
         throw error;
     }
 };
