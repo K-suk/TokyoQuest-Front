@@ -151,7 +151,7 @@ export const completeQuest = async (questId, media) => {
 
     // FormDataの内容をログに出力
     for (let [key, value] of formData.entries()) { 
-        console.log(key, value);
+        console.log('formData:', key, value);
     }
 
     try {
