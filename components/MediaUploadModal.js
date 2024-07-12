@@ -12,15 +12,15 @@ const MediaUploadModal = ({ questId, onComplete, onClose }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         if (!media) {
             setMessage('Please select a media file before completing the quest.');
             return;
         }
-
+    
         const formData = new FormData();
         formData.append('media', media);
-
+    
         try {
             setIsLoading(true);
             const token = localStorage.getItem('accessToken');
@@ -39,7 +39,7 @@ const MediaUploadModal = ({ questId, onComplete, onClose }) => {
             setIsLoading(false);
             onClose();
         }
-    };
+    };    
 
     return (
         <div>

@@ -31,6 +31,12 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         try {
             const formData = new FormData();
             formData.append('media', selectedFile);
+    
+            // FormDataの内容を確認
+            for (let [key, value] of formData.entries()) { 
+                console.log(key, value);
+            }
+    
             await completeQuest(questId, formData);
             if (onComplete) {
                 onComplete(questId);
@@ -41,7 +47,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         } finally {
             setIsLoading(false);
         }
-    };
+    };    
 
     const openModal = () => {
         setModalIsOpen(true);
