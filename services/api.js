@@ -145,13 +145,15 @@ export const resetPassword = async (uid, token, newPassword) => {
     }
 };
 
+
 export const completeQuest = async (questId, media) => {
     const formData = new FormData();
     formData.append('media', media);
 
-    // FormDataの内容をログに出力
+    // FormDataの内容を詳細にログに出力
+    console.log('FormData entries:');
     for (let [key, value] of formData.entries()) { 
-        console.log('formData:', key, value);
+        console.log(`${key}: ${value.name}, size: ${value.size}, type: ${value.type}`);
     }
 
     try {
