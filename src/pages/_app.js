@@ -1,6 +1,6 @@
 // pages/_app.js
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/globals.css';
+import 'src/styles/globals.css';
 import '/public/css/styles.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
