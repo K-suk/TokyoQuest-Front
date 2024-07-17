@@ -243,7 +243,9 @@ const QuestDetail = () => {
                             <div className={styles["project-info-box"]}>
                                 <p className='content-p'><b>Title:</b> {quest.title}</p>
                                 <p className='content-p'><b>Avg review:</b> {averageRating.toFixed(1)}</p>
-                                <p className='content-p' href={quest.location}><b>Location:</b> {quest.location}</p>
+                                <p className='content-p'>
+                                    <b>Location:</b> <a href={quest.location} target="_blank" rel="noopener noreferrer">{quest.location}</a>
+                                </p>
                                 <p className="mb-0 content-p"><b>Budget:</b> {quest.badget}</p>
                             </div>
                         </div>
