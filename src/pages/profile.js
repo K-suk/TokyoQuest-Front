@@ -126,7 +126,7 @@ const Profile = () => {
 
                                 return (
                                     <div key={ticket.id}>
-                                        <p><strong>Ticket:</strong> {ticket.title}</p>
+                                        {/* <p><strong>Ticket:</strong> {ticket.title}</p> */}
                                         <p>{ticket.description}</p>
                                         {claimedTicket ? (
                                             issuance && !issuance.used ? (
