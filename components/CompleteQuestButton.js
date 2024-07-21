@@ -53,8 +53,8 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                className="modal-content"
-                overlayClassName="modal-overlay"
+                className="modal-content"  // CSSクラスを適用
+                overlayClassName="modal-overlay"  // オーバーレイにクラスを適用（必要に応じて）
                 contentLabel="Upload Media"
             >
                 <h2>Upload Media</h2>
@@ -64,7 +64,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
                     <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark modal-button">
                         {isLoading ? 'Uploading...' : 'Upload and Complete'}
                     </button>
-                    <button onClick={closeModal} className="btn btn-outline-dark">
+                    <button onClick={closeModal} className="btn btn-outline-dark modal-button">
                         Close
                     </button>
                 </div>
