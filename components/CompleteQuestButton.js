@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { completeQuest } from '../services/api';
-import '../styles/global.css';  // global.cssをインポート
+import '/styles/global.css';  // global.cssをインポート
 
 const CompleteQuestButton = ({ questId, onComplete }) => {
     const [isLoading, setIsLoading] = useState(false);
