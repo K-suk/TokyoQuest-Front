@@ -114,7 +114,7 @@ const Profile = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <div className="p-3 py-5">
                             {tickets.map(ticket => {
                                 console.log(`Checking issued_to for ticket ${ticket.id}:`, ticket.issued_to);
@@ -150,7 +150,7 @@ const Profile = () => {
                                 );
                             })}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
