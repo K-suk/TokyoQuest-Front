@@ -116,7 +116,7 @@ const Profile = () => {
                     </div>
                     <div className="col-md-4">
                         <div className="p-3 py-5">
-                            <div className="d-flex justify-content-between align-items-center experience"><span>Tickets</span></div><br />
+                            {/* <div className="d-flex justify-content-between align-items-center experience"><span>Tickets</span></div><br /> */}
                             {tickets.map(ticket => {
                                 console.log(`Checking issued_to for ticket ${ticket.id}:`, ticket.issued_to);
                                 const claimedTicket = ticket.issued_to.some(user => user.id === profile.id);
@@ -126,7 +126,7 @@ const Profile = () => {
 
                                 return (
                                     <div key={ticket.id}>
-                                        {/* <p><strong>Ticket:</strong> {ticket.title}</p> */}
+                                        <p><strong>Ticket:</strong> {ticket.title}</p>
                                         <p>{ticket.description}</p>
                                         {claimedTicket ? (
                                             issuance && !issuance.used ? (

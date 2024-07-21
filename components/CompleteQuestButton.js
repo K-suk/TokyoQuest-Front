@@ -85,19 +85,6 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { completeQuest } from '../services/api';
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        width: '80%', // ここで幅をデバイスの80%に設定
-        maxWidth: '600px', // オプション: 最大幅を設定して大きすぎないようにする
-    }
-};
-
 const CompleteQuestButton = ({ questId, onComplete }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -148,14 +135,25 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                style={{
+                    content: {
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '80%',
+                        maxWidth: '600px'
+                    }
+                }}
                 contentLabel="Upload Media"
             >
                 <h2>Upload Media</h2>
                 <input type="file" onChange={handleFileChange} />
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                    <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark">
+                <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px' }}>
+                    <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark" style={{ marginRight: '10px' }}>
                         {isLoading ? 'Uploading...' : 'Upload and Complete'}
                     </button>
                     <button onClick={closeModal} className="btn btn-outline-dark">
