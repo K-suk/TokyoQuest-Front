@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { completeQuest } from '../services/api';
-import 'src/styles/globals.css';  // global.cssをインポート
+import styles from 'src/styles/CompleteQuestButton.module.css'; // CompleteQuestButton.module.cssをインポート
 
 const CompleteQuestButton = ({ questId, onComplete }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -53,18 +53,18 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                className="modal-content"  // CSSクラスを適用
+                className={styles['modal-content']}  // CSSクラスを適用
                 overlayClassName="modal-overlay"  // オーバーレイにクラスを適用（必要に応じて）
                 contentLabel="Upload Media"
             >
                 <h2>Upload Media</h2>
                 <input type="file" onChange={handleFileChange} />
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <div className="modal-buttons">
-                    <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark modal-button">
+                <div className={styles['modal-buttons']}>
+                    <button onClick={handleCompleteQuest} disabled={isLoading} className={`btn btn-outline-dark ${styles['modal-button']}`}>
                         {isLoading ? 'Uploading...' : 'Upload and Complete'}
                     </button>
-                    <button onClick={closeModal} className="btn btn-outline-dark modal-button">
+                    <button onClick={closeModal} className={`btn btn-outline-dark ${styles['modal-button']}`}>
                         Close
                     </button>
                 </div>
