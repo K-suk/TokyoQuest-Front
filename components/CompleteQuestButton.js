@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal'; // 追加
+import Modal from 'react-modal';
 import { completeQuest } from '../services/api';
+import styles from 'src/styles/CompleteQuestButton.module.css'; // CompleteQuestButton.module.cssをインポート
 
 const customStyles = {
     content: {
@@ -8,8 +9,9 @@ const customStyles = {
         left: '50%',
         right: 'auto',
         bottom: 'auto',
-        marginBottom: '10px',
-        transform: 'translate(-50%, -50%)'
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        marginBottom: '20px' // marginBottomを追加
     }
 };
 
@@ -29,7 +31,6 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         }
         setIsLoading(true);
         try {
-            // selectedFileを直接completeQuest関数に渡す
             await completeQuest(questId, selectedFile);
             if (onComplete) {
                 onComplete(questId);
@@ -40,7 +41,7 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
         } finally {
             setIsLoading(false);
         }
-    };    
+    };
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -70,10 +71,14 @@ const CompleteQuestButton = ({ questId, onComplete }) => {
                 <h2>Upload Media</h2>
                 <input type="file" onChange={handleFileChange} />
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <button onClick={handleCompleteQuest} disabled={isLoading} className="btn btn-outline-dark mt-auto uniform-width">
-                    {isLoading ? 'Uploading...' : 'Upload and Complete'}
-                </button>
-                <button onClick={closeModal}>Close</button>
+                <div className={styles.modalButtons}>
+                    <button onClick={handleCompleteQuest} disabled={isLoading} className={`btn btn-outline-dark ${styles.modalButton}`}>
+                        {isLoading ? 'Uploading...' : 'Upload and Complete'}
+                    </button>
+                    <button onClick={closeModal} className={`btn btn-outline-dark ${styles.modalButton}`}>
+                        Close
+                    </button>
+                </div>
             </Modal>
         </>
     );
