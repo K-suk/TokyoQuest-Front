@@ -1,5 +1,5 @@
 /* src/styles/CompleteQuestButton.module.css */
-.modal-content {
+.modalContent {
     width: 80%; /* ポップアップの幅を画面の80%に設定 */
     max-width: 600px; /* 最大幅を設定 */
     margin: auto; /* 中央に配置 */
@@ -9,16 +9,16 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* シャドウを追加 */
 }
 
-.modal-buttons {
+.modalButtons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px; /* ボタンコンテナの上にスペースを追加 */
 }
 
-.modal-button {
+.modalButton {
     margin-right: 10px; /* ボタン間にスペースを追加 */
 }
 
-.modal-button:last-child {
+.modalButton:last-child {
     margin-right: 0; /* 最後のボタンの右側にスペースを追加しない */
 }
