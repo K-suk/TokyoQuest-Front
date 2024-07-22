@@ -11,7 +11,14 @@ const customStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        marginBottom: '20px' // marginBottomを追加
+        width: '80%',
+        maxWidth: '600px',
+        padding: '20px',
+        background: 'white',
+        borderRadius: '4px',
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+        position: 'absolute',
+        marginBottom: '20px'
     }
 };
 
