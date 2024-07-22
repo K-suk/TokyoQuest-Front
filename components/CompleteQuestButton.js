@@ -8,7 +8,7 @@ const customStyles = {
         left: '50%',
         right: 'auto',
         bottom: 'auto',
-        marginButton: '10px',
+        marginBottom: '10px',
         transform: 'translate(-50%, -50%)'
     }
 };
