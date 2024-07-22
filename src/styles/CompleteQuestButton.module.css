@@ -1,22 +1,28 @@
 /* src/styles/CompleteQuestButton.module.css */
 .modalContent {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
     width: 80%; /* ポップアップの幅を画面の80%に設定 */
     max-width: 600px; /* 最大幅を設定 */
-    margin: auto; /* 中央に配置 */
     padding: 20px; /* パディングを追加 */
     background: white; /* 背景色を白に設定 */
     border-radius: 4px; /* 角を丸める */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* シャドウを追加 */
+    position: absolute;
 }
 
 .modalButtons {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; /* ボタンコンテナの上にスペースを追加 */
+    margin-top: 10px; /* ボタンコンテナの上にスペースを追加 */
 }
 
 .modalButton {
-    margin-right: 10px; /* ボタン間にスペースを追加 */
+    margin-bottom: 10px; /* ボタン間にスペースを追加 */
 }
 
 .modalButton:last-child {
