@@ -1,7 +1,8 @@
 // services/api.js
 import axios from 'axios';
 
-const API_URL = 'https://tokyoquest.onrender.com/api';  // 環境変数の代わりに直接URLを設定
+// const API_URL = 'https://tokyoquest.onrender.com/api';  // 環境変数の代わりに直接URLを設定
+const API_URL = 'https://0.0.0.0:8000/api';
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');
@@ -346,6 +347,40 @@ export const getReports = async () => {
                 } else {
                     return [response.data];
                 }
+            }
+        }
+        throw error;
+    }
+};
+
+export const createTravelPlan = async (area) => {
+    try {
+        const response = await axios.post(`${API_URL}/travel-plans/create_plan/`, {
+            area
+        }, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.post(`${API_URL}/travel-plans/create_plan/`, {
+                    area
+                }, getAuthHeaders()).then(response => response.data);
+            }
+        }
+        throw error;
+    }
+};
+
+export const getUserTravelPlan = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/travel-plans/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.get(`${API_URL}/travel-plans/`, getAuthHeaders()).then(response => response.data);
             }
         }
         throw error;

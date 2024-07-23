@@ -56,6 +56,11 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
+                            <Link href="/travel-plan" legacyBehavior>
+                                <a className="nav-link" style={{ color: '#fff' }}>Make Travel</a>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <LogoutButton />
                         </li>
                     </ul>

@@ -8,11 +8,13 @@ import Image from 'next/image';
 const Login = () => {
     const [accountId, setAccountId] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // エラー状態を追加
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // Loading状態を追加
     const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true); // Loadingを開始
         try {
             const data = await login(accountId, password);
             localStorage.setItem('accessToken', data.access);
@@ -20,8 +22,9 @@ const Login = () => {
             router.push('/'); // ログイン後にホームページに遷移
         } catch (error) {
             console.error('Error logging in:', error.response ? error.response.data : error.message);
-            setError('Invalid account ID or password. Please try again.'); // エラーメッセージを設定
+            setError('Invalid account ID or password. Please try again.');
         }
+        setLoading(false); // Loadingを終了
     };
 
     return (
@@ -45,9 +48,8 @@ const Login = () => {
                         </div>
                         <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                             <h1 className="mb-4">Login</h1>
-                            {error && <div className="alert alert-danger" role="alert">{error}</div>} {/* エラーメッセージ表示 */}
+                            {error && <div className="alert alert-danger" role="alert">{error}</div>}
                             <form onSubmit={handleSubmit}>
-                                {/* Account ID input */}
                                 <div className="form-outline mb-4">
                                     <input
                                         type="text"
@@ -60,7 +62,6 @@ const Login = () => {
                                     />
                                 </div>
 
-                                {/* Password input */}
                                 <div className="form-outline mb-4">
                                     <input
                                         type="password"
@@ -74,14 +75,14 @@ const Login = () => {
                                 </div>
 
                                 <div className="d-flex justify-content-end align-items-center mb-4">
-                                    {/* Checkbox */}
                                     <Link href="/password-reset-request" legacyBehavior>
                                         <a className="text-body">Forgot password?</a>
                                     </Link>
                                 </div>
 
-                                {/* Submit button */}
-                                <button type="submit" className="btn btn-lg btn-block w-100" style={{ backgroundColor: '#EF454A', color: '#fff' }}>Sign in</button>
+                                <button type="submit" className="btn btn-lg btn-block w-100" style={{ backgroundColor: '#EF454A', color: '#fff' }} disabled={loading}>
+                                    {loading ? 'Loading...' : 'Log in'}
+                                </button>
                             </form>
                         </div>
                     </div>
