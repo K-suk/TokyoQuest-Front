@@ -1,9 +1,11 @@
+// pages/travel-plan.js
 import React, { useState, useEffect } from 'react';
 import { createTravelPlan, getUserTravelPlan } from '/services/api';
 import styles from 'src/styles/TravelPlan.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import CompleteQuestButton from 'components/CompleteQuestButton.js';  // コンポーネントのインポート
+import CompleteQuestButton from 'components/CompleteQuestButton.js';
+import SaveQuestButton from 'components/SaveQuestButton.js';  // SaveQuestButtonのインポート
 
 const TravelPlanPage = () => {
     const [area, setArea] = useState('');
@@ -49,6 +51,10 @@ const TravelPlanPage = () => {
 
     const handleComplete = async (questId) => {
         // クエスト完了処理のロジックをここに追加
+    };
+
+    const handleSave = async (questId) => {
+        // クエスト保存成功後の処理をここに追加
     };
 
     return (
@@ -109,8 +115,11 @@ const TravelPlanPage = () => {
                                             <a className="btn btn-outline-dark mt-auto uniform-width">View Detail</a>
                                         </Link>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center mb-2">
                                         <CompleteQuestButton questId={quest.id} onComplete={handleComplete} className="uniform-width" />
+                                    </div>
+                                    <div className="text-center">
+                                        <SaveQuestButton questId={quest.id} onSave={handleSave} />
                                     </div>
                                 </div>
                             </div>

@@ -48,6 +48,11 @@ const Navbar = () => {
                                 <a className="nav-link" style={{ color: '#fff' }}>Completed Quests</a>
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link href="/saved-quests" legacyBehavior>
+                                <a className="nav-link" style={{ color: '#fff' }}>Saved Quests</a>
+                            </Link>
+                        </li>
                     </ul>
                     <ul className="d-flex navbar-nav">
                         <li className="nav-item">

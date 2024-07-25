@@ -386,3 +386,48 @@ export const getUserTravelPlan = async () => {
         throw error;
     }
 };
+
+export const saveQuest = async (questId) => {
+    try {
+        const response = await axios.post(`${API_URL}/quests/${questId}/save/`, {}, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.post(`${API_URL}/quests/${questId}/save/`, {}, getAuthHeaders()).then(response => response.data);
+            }
+        }
+        throw error;
+    }
+};
+
+export const isQuestSaved = async (questId) => {
+    try {
+        const response = await axios.get(`${API_URL}/quests/${questId}/is_saved/`, getAuthHeaders());
+        return response.data.is_saved;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.get(`${API_URL}/quests/${questId}/is_saved/`, getAuthHeaders()).then(response => response.data.is_saved);
+            }
+        }
+        throw error;
+    }
+};
+
+export const getSavedQuests = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/quests/saved/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.get(`${API_URL}/quests/saved/`, getAuthHeaders()).then(response => response.data);
+            }
+        }
+        throw error;
+    }
+};
