@@ -12,6 +12,12 @@ const CompletedQuests = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+        
         const fetchCompletedQuests = async () => {
             try {
                 const data = await getCompletedQuests();

@@ -15,6 +15,11 @@ const Profile = () => {
     const router = useRouter();
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
         const fetchProfileAndTickets = async () => {
             console.log('Fetching profile and tickets...');
             try {

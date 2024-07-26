@@ -8,6 +8,11 @@ const ReportPage = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
         const fetchReport = async () => {
             try {
                 const data = await getReports();

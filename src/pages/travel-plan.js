@@ -16,6 +16,11 @@ const TravelPlanPage = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
         fetchUserTravelPlan();
     }, []);
 

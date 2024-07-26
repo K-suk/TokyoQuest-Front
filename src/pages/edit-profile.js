@@ -18,6 +18,11 @@ const EditProfile = () => {
     const router = useRouter();
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
         const fetchProfile = async () => {
             try {
                 const profileData = await getProfile();
