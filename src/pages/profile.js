@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { getProfile, getTickets, claimTicket, useTicket as fetchTicket, getTicketIssuances } from '/services/api';
+import { getProfile, getTickets, claimTicket, useTicket as fetchTicket, getTicketIssuances, getReports, generateReport } from '/services/api';
 import ClaimTicketButton from 'components/ClaimTicketButton';
 import UseTicketButton from 'components/UseTicketButton';
 import Link from 'next/link';
@@ -20,6 +20,24 @@ const Profile = () => {
             router.push('/login');
             return;
         }
+
+        const checkUserStatus = async () => {
+            try {
+                const profile = await getProfile();
+                const today = new Date().toISOString().split('T')[0];
+
+                if (profile.due && new Date(profile.due) <= new Date(today)) {
+                    const reports = await getReports();
+                    if (reports.length === 0) {
+                        await generateReport();
+                    }
+                    router.push('/report');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        };
+        
         const fetchProfileAndTickets = async () => {
             console.log('Fetching profile and tickets...');
             try {
@@ -47,6 +65,7 @@ const Profile = () => {
             }
         };
 
+        checkUserStatus();
         if (fetching) {
             fetchProfileAndTickets();
         }

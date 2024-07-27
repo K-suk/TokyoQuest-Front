@@ -329,30 +329,6 @@ export const searchQuestsByTag = async (tag) => {
     }
 };
 
-export const getReports = async () => {
-    try {
-        const response = await axios.get(`${API_URL}/quests/reports/`, getAuthHeaders());
-        if (Array.isArray(response.data)) {
-            return response.data;
-        } else {
-            return [response.data];
-        }
-    } catch (error) {
-        if (error.response && error.response.status === 401) {
-            const newAccessToken = await refreshToken();
-            if (newAccessToken) {
-                const response = await axios.get(`${API_URL}/quests/reports/`, getAuthHeaders());
-                if (Array.isArray(response.data)) {
-                    return response.data;
-                } else {
-                    return [response.data];
-                }
-            }
-        }
-        throw error;
-    }
-};
-
 export const createTravelPlan = async (area) => {
     try {
         const response = await axios.post(`${API_URL}/travel-plans/create_plan/`, {
@@ -427,6 +403,34 @@ export const getSavedQuests = async () => {
             if (newAccessToken) {
                 return await axios.get(`${API_URL}/quests/saved/`, getAuthHeaders()).then(response => response.data);
             }
+        }
+        throw error;
+    }
+};
+
+export const generateReport = async () => {
+    try {
+        const response = await axios.post(`${API_URL}/generate_report/`, {}, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                return await axios.post(`${API_URL}/generate_report/`, {}, getAuthHeaders()).then(response => response.data);
+            }
+        }
+        throw error;
+    }
+};
+
+export const getReports = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/reports/`, getAuthHeaders());
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            // トークンが無効な場合のリフレッシュロジックを追加することもできます
+            throw error;
         }
         throw error;
     }

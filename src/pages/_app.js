@@ -5,7 +5,7 @@ import '/public/css/styles.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '/components/Layout';
-import { getProfile } from '/services/api';
+import { getProfile, getReports, generateReport } from '/services/api';
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
@@ -17,22 +17,8 @@ function MyApp({ Component, pageProps }) {
             await import('/public/js/scripts.js');
         };
         loadScripts();
-
-        const checkUserStatus = async () => {
-            try {
-                const profile = await getProfile();
-                if (profile.done && router.pathname !== '/report') {
-                    router.push('/report');
-                }
-            } catch (error) {
-                console.error('Error fetching profile:', error);
-            }
-        };
-
-        checkUserStatus();
     }, [router]);
 
-    // ナビバーを表示しないルートを正規表現で指定
     const noNavbarRoutes = [
         /^\/login$/,
         /^\/password-reset-request$/,

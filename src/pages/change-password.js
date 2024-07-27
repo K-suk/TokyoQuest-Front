@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { changePassword } from '/services/api';
+import { changePassword, getProfile, getReports, generateReport } from '/services/api';
 
 const ChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -16,6 +16,24 @@ const ChangePassword = () => {
             router.push('/login');
             return;
         }
+
+        const checkUserStatus = async () => {
+            try {
+                const profile = await getProfile();
+                const today = new Date().toISOString().split('T')[0];
+
+                if (profile.due && new Date(profile.due) <= new Date(today)) {
+                    const reports = await getReports();
+                    if (reports.length === 0) {
+                        await generateReport();
+                    }
+                    router.push('/report');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        };
+        checkUserStatus();
     }, [router]);
 
     const handleSubmit = async (e) => {

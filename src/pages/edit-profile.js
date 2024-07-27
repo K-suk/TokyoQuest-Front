@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getProfile, updateProfile } from '/services/api';
+import { getProfile, updateProfile, getReports, generateReport } from '/services/api';
 import DOMPurify from 'dompurify';
 import styles from '../styles/profile.module.css';
 import Image from 'next/image'; // 追加
@@ -23,6 +23,24 @@ const EditProfile = () => {
             router.push('/login');
             return;
         }
+
+        const checkUserStatus = async () => {
+            try {
+                const profile = await getProfile();
+                const today = new Date().toISOString().split('T')[0];
+
+                if (profile.due && new Date(profile.due) <= new Date(today)) {
+                    const reports = await getReports();
+                    if (reports.length === 0) {
+                        await generateReport();
+                    }
+                    router.push('/report');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        };
+
         const fetchProfile = async () => {
             try {
                 const profileData = await getProfile();
@@ -37,6 +55,7 @@ const EditProfile = () => {
             }
         };
 
+        checkUserStatus();
         fetchProfile();
     }, [router]); // 依存配列にrouterを追加
 

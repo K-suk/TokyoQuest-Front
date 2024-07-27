@@ -1,6 +1,6 @@
 // pages/travel-plan.js
 import React, { useState, useEffect } from 'react';
-import { createTravelPlan, getUserTravelPlan } from '/services/api';
+import { createTravelPlan, getUserTravelPlan, getProfile, getReports, generateReport } from '/services/api';
 import styles from 'src/styles/TravelPlan.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,6 +21,25 @@ const TravelPlanPage = () => {
             router.push('/login');
             return;
         }
+
+        const checkUserStatus = async () => {
+            try {
+                const profile = await getProfile();
+                const today = new Date().toISOString().split('T')[0];
+
+                if (profile.due && new Date(profile.due) <= new Date(today)) {
+                    const reports = await getReports();
+                    if (reports.length === 0) {
+                        await generateReport();
+                    }
+                    router.push('/report');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        };
+        
+        checkUserStatus();
         fetchUserTravelPlan();
     }, []);
 
@@ -75,10 +94,10 @@ const TravelPlanPage = () => {
                             required
                         >
                             <option value="" disabled>Select an area</option>
-                            <option value="shibuya">Shibuya</option>
-                            <option value="asakusa">Asakusa</option>
-                            <option value="tokyo">Tokyo</option>
-                            <option value="odaiba">Odaiba</option>
+                            <option value="shibuya">Shibuya&Shinjuku</option>
+                            <option value="asakusa">Asakusa&Akihabara</option>
+                            <option value="tokyo">Tokyo&Ginza</option>
+                            <option value="odaiba">Odaiba&Toyosu</option>
                         </select>
                     </label>
                 </div>
@@ -134,6 +153,10 @@ const TravelPlanPage = () => {
             ) : (
                 <p>Travel Plan Not Exist</p>
             )}
+            <div className={styles.footnote}>
+                <p>This document is automatically generated and may contain duplicates. Please use it as a reference and do not rely on it completely.</p>
+                <p>Recommended Usage: First, use the Travel-Plan feature to create a basic itinerary. Then, use the Tag Search feature to find specific places (e.g., Shibuya) and activities (e.g., Family) to customize your itinerary to better suit your preferences.</p>
+            </div>
         </div>
     );
 };

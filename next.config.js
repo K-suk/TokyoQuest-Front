@@ -1,4 +1,4 @@
-// // next.config.js の更新
+// next.config.js の更新
 module.exports = {
   async headers() {
     return [
