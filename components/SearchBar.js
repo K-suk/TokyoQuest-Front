@@ -4,23 +4,31 @@ import styles from 'src/styles/SearchBar.module.css';
 
 const SearchBar = ({ onSearch }) => {
     const [tag, setTag] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSearch(tag);
+        setLoading(true);
+        await onSearch(tag);
+        setLoading(false);
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.searchForm}>
-            <input 
-                type="text" 
-                value={tag} 
-                onChange={(e) => setTag(e.target.value)} 
-                placeholder="Search by tag..." 
-                className={styles.searchInput}
-            />
-            <button type="submit" className={styles.searchButton} style={{ backgroundColor: '#EF454A' }}>Search</button>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit} className={styles.searchForm}>
+                <input 
+                    type="text" 
+                    value={tag} 
+                    onChange={(e) => setTag(e.target.value)} 
+                    placeholder="Search by tag..." 
+                    className={styles.searchInput}
+                    disabled={loading}
+                />
+                <button type="submit" className={styles.searchButton} style={{ backgroundColor: '#EF454A' }} disabled={loading}>
+                    {loading ? 'Loading...' : 'Search'}
+                </button>
+            </form>
+        </div>
     );
 };
 
