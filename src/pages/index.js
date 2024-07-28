@@ -105,7 +105,7 @@ const Home = ({ initialQuests }) => {
                 />
             </header>
             <section className="py-5">
-                <div className="container px-4 px-lg-5 mt-5">
+                <div className="container px-4 px-lg-5">
                     <div className="container mt-5">
                         <h1 className="my-4">Quests</h1>
                         <SearchBar onSearch={handleSearch} />
