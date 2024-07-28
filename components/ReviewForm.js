@@ -52,7 +52,7 @@ const ReviewForm = ({ questId, onReviewSubmitted }) => {
                         edit={!loading}
                     />
                 </div>
-                <button className="btn btn-success btn-lg" type="submit" disabled={loading}>
+                <button className="btn btn-success btn-lg mb-2" type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Save'}
                 </button>
             </div>
