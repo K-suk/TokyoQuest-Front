@@ -238,9 +238,11 @@ const QuestDetail = () => {
                         <div className="col-md-7">
                             <div className={`${styles["project-info-box"]} mt-0`}>
                                 <h2>QUEST DETAILS</h2>
-                                <p className="mb-0 content-p">{quest.description}</p>
+                                <p className="mb-0 content-p mb-2">{quest.description}</p>
+                                <h2>Only Local knows</h2>
+                                <p className="mb-0 content-p">{quest.tips}</p>
                             </div>
-                            <div className={styles["project-info-box"]}>
+                            <div className={`${styles["project-info-box"]} mt-0`}>
                                 <p className='content-p'><b>Title:</b> {quest.title}</p>
                                 <p className='content-p'><b>Avg review:</b> {averageRating.toFixed(1)}</p>
                                 <p className='content-p'>

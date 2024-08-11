@@ -7,7 +7,7 @@ module.exports = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src 'self' https://tokyoquest.onrender.com; frame-src 'self';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com https://maps.gstatic.com https://maps.googleapis.com;; connect-src 'self' https://tokyoquest.onrender.com https://0.0.0.0:8000 https://maps.googleapis.com; frame-src 'self';",
           },
           {
             key: 'X-Content-Type-Options',
@@ -34,7 +34,7 @@ module.exports = {
     ];
   },
   images: {
-    domains: ['dummyimage.com', 'lh3.googleusercontent.com'],
+    domains: ['dummyimage.com', 'lh3.googleusercontent.com', 'maps.gstatic.com', 'maps.googleapis.com'],
   },
 };
 
@@ -47,7 +47,7 @@ module.exports = {
 //         headers: [
 //           {
 //             key: 'Content-Security-Policy',
-//             value: "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src 'self' https://tokyoquest.onrender.com https://0.0.0.0:8000; frame-src 'self';",
+//             value: "default-src 'self'; script-src 'self' 'unsafe-eval' https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com https://maps.gstatic.com https://maps.googleapis.com; connect-src 'self' https://tokyoquest.onrender.com https://0.0.0.0:8000 https://maps.googleapis.com; frame-src 'self';",
 //           },
 //           {
 //             key: 'X-Content-Type-Options',
@@ -74,6 +74,6 @@ module.exports = {
 //     ];
 //   },
 //   images: {
-//     domains: ['dummyimage.com', 'lh3.googleusercontent.com'],
+//     domains: ['dummyimage.com', 'lh3.googleusercontent.com', 'maps.gstatic.com', 'maps.googleapis.com'],
 //   },
 // };
