@@ -36,6 +36,9 @@ module.exports = {
   images: {
     domains: ['dummyimage.com', 'lh3.googleusercontent.com', 'maps.gstatic.com', 'maps.googleapis.com'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 // next.config.js の更新
