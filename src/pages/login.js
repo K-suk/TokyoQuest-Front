@@ -38,7 +38,7 @@ const Login = () => {
                     <div className="row d-flex align-items-center justify-content-center h-100">
                         <div className="col-md-8 col-lg-7 col-xl-6">
                             <Image
-                                src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png"
+                                src="/images/Untitled design (3).png"
                                 className="img-fluid"
                                 alt="Phone image"
                                 width={500}
