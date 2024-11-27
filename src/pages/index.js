@@ -10,6 +10,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import MediaUploadModal from '/components/MediaUploadModal';
 import styles from 'src/styles/Home.module.css'; // CSSモジュールのインポート
+import Script from 'next/script';
 
 const Home = ({ initialQuests }) => {
     const [quests, setQuests] = useState(initialQuests);
@@ -62,6 +63,19 @@ const Home = ({ initialQuests }) => {
         fetchData();
     }, [router]);
 
+    useEffect(() => {
+        console.log("work");
+        const titles = document.querySelectorAll(".quest-title");
+        const maxLength = 40; // 半角50文字 (全角は約25文字)
+
+        titles.forEach(title => {
+            const text = title.textContent;
+            if (text.length > maxLength) {
+                title.textContent = text.substring(0, maxLength) + "…";
+            }
+        });
+    }, [quests]);
+
     const handleComplete = (questId) => {
         setQuests((prevQuests) => prevQuests.filter((quest) => quest.id !== questId));
     };
@@ -92,71 +106,170 @@ const Home = ({ initialQuests }) => {
     return (
         <div>
             <Head>
-                <title>Shop Homepage - Start Bootstrap Template</title>
-                <link rel="icon" href="/assets/favicon.ico" />
+                <title>TokyoQuest</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <header className={`${styles.header} position-relative`}>
-                <Image
-                    src="/images/Tokyo Quest.png"
-                    alt="Tokyo Quest"
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                />
-            </header>
-            <section>
-                <div className="container px-4 px-lg-5">
-                    <div className="container mt-5">
-                        <h1 className="my-4">Quests</h1>
-                        <SearchBar onSearch={handleSearch} />
-                        {loading ? (
-                            <div className="text-center">Loading...</div>
-                        ) : (
-                            <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                                {quests.map(quest => (
-                                    <div key={quest.id} className="col mb-5">
-                                        <div className="card h-100">
-                                            <Image
-                                                className="card-img-top"
-                                                src={quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"}
-                                                alt={quest.title}
-                                                width={450}
-                                                height={300}
-                                            />
-                                            <div className="card-body p-4">
-                                                <div className="text-center">
-                                                    <h5 className="fw-bolder">{quest.title}</h5>
-                                                    {quest.tags && (
-                                                        <div>
-                                                            {quest.tags.map(tag => (
-                                                                <span key={tag.id} className="badge bg-secondary me-1">{tag.name}</span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                <div className="text-center mb-2">
-                                                    <Link href={`/quest/${quest.id}`} legacyBehavior>
-                                                        <a className="btn btn-outline-dark mt-auto uniform-width">View Detail</a>
-                                                    </Link>
-                                                </div>
-                                                <div className="text-center mb-2">
-                                                    <CompleteQuestButton questId={quest.id} onComplete={handleComplete} className="uniform-width" />
-                                                </div>
-                                                <div className="text-center">
-                                                    <SaveQuestButton questId={quest.id} onSave={handleSave} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+
+            {/* カテゴリ */}
+            <div className="container mt-4">
+                <h3>Famous Categories</h3>
+                <div className="row">
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Night Life" width={70} height={70} className="rounded-circle" />
+                        <p>Night Life</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Shibuya Area" width={70} height={70} className="rounded-circle" />
+                        <p>Shibuya</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Shinjuku" width={70} height={70} className="rounded-circle" />
+                        <p>Shinjuku</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Food" width={70} height={70} className="rounded-circle" />
+                        <p>Food</p>
                     </div>
                 </div>
-            </section>
-            {showModal && <MediaUploadModal questId={currentQuestId} onComplete={handleComplete} onClose={handleCloseModal} />}
+
+                <div className="row">
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Night Life" width={70} height={70} className="rounded-circle" />
+                        <p>Night Life</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Shibuya Area" width={70} height={70} className="rounded-circle" />
+                        <p>Shibuya</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Shinjuku" width={70} height={70} className="rounded-circle" />
+                        <p>Shinjuku</p>
+                    </div>
+                    <div className="col-3 text-center category-icon">
+                        <Image src="/images/Tokyo Quest.png" alt="Food" width={70} height={70} className="rounded-circle" />
+                        <p>Food</p>
+                    </div>
+                </div>
+
+                <h3>Shibuya Quests</h3>
+                <ul className="scroll_content" style={{ display: 'flex', maxWidth: '2000px', marginLeft: '-45px', overflowX: 'auto', marginBottom: '-10px' }}>
+                    {quests.map((quest) => (
+                        <li
+                            style={{
+                                width: '60%',
+                                padding: '8px',
+                                margin: '3px',
+                                flexShrink: '0',
+                                listStyle: 'none',
+                                cursor: 'pointer',
+                            }}
+                            key={quest.id}
+                        >
+                            {/* 画像とタイトル全体をクリック可能にする */}
+                            <Link href={`/quest/${quest.id}`} legacyBehavior>
+                                <a
+                                    style={{
+                                        textDecoration: 'none', // リンクのデフォルト装飾を削除
+                                        color: 'inherit', // テキスト色を継承
+                                        display: 'block', // 全体をリンクとして機能させる
+                                    }}
+                                >
+                                    {/* 画像 */}
+                                    <img
+                                        src={quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"}
+                                        style={{
+                                            width: '100%',
+                                            height: '150px',
+                                            objectFit: 'cover',
+                                            borderTopLeftRadius: '5px',
+                                            borderTopRightRadius: '5px',
+                                            opacity: '0.8',
+                                        }}
+                                        alt={quest.title}
+                                    />
+                                    {/* タイトル */}
+                                    <p
+                                        className="quest-title"
+                                        style={{
+                                            backgroundColor: '#EF454A',
+                                            color: 'white',
+                                            height: '105px',
+                                            borderBottomLeftRadius: '5px',
+                                            borderBottomRightRadius: '5px',
+                                            padding: '10px',
+                                            fontWeight: 'bold',
+                                            fontSize: '20px',
+                                        }}
+                                    >
+                                        {quest.title}
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+
+                <h3>Shinjuku Quests</h3>
+                <ul className="scroll_content" style={{ display: 'flex', maxWidth: '2000px', marginLeft: '-45px', overflowX: 'auto', marginBottom: '-10px' }}>
+                    {quests.map((quest) => (
+                        <li
+                            style={{
+                                width: '60%',
+                                padding: '8px',
+                                margin: '3px',
+                                flexShrink: '0',
+                                listStyle: 'none',
+                                cursor: 'pointer',
+                            }}
+                            key={quest.id}
+                        >
+                            {/* 画像とタイトル全体をクリック可能にする */}
+                            <Link href={`/quest/${quest.id}`} legacyBehavior>
+                                <a
+                                    style={{
+                                        textDecoration: 'none', // リンクのデフォルト装飾を削除
+                                        color: 'inherit', // テキスト色を継承
+                                        display: 'block', // 全体をリンクとして機能させる
+                                    }}
+                                >
+                                    {/* 画像 */}
+                                    <img
+                                        src={quest.imgUrl || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"}
+                                        style={{
+                                            width: '100%',
+                                            height: '150px',
+                                            objectFit: 'cover',
+                                            borderTopLeftRadius: '5px',
+                                            borderTopRightRadius: '5px',
+                                            opacity: '0.8',
+                                        }}
+                                        alt={quest.title}
+                                    />
+                                    {/* タイトル */}
+                                    <p
+                                        className="quest-title"
+                                        style={{
+                                            backgroundColor: '#EF454A',
+                                            color: 'white',
+                                            height: '105px',
+                                            borderBottomLeftRadius: '5px',
+                                            borderBottomRightRadius: '5px',
+                                            padding: '10px',
+                                            fontWeight: 'bold',
+                                            fontSize: '20px',
+                                        }}
+                                    >
+                                        {quest.title}
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Bootstrap JS Script */}
+            {/* <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></Script> */}
         </div>
     );
 };

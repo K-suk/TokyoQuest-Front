@@ -2,6 +2,7 @@
 .saveButton {
     position: relative;
     display: inline-block;
-    width: 100%;
+    width: 100px;
+    margin-left: 20px;
     text-align: center;
 }

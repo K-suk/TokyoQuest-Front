@@ -44,7 +44,7 @@ const SaveQuestButton = ({ questId, onSave }) => {
             disabled={isLoading || isSaved} 
             className={`btn ${isSaved ? 'btn-dark text-white' : 'btn-outline-dark'} mt-auto uniform-width ${styles.saveButton}`}
         >
-            {isLoading ? 'Saving...' : isSaved ? 'Saved' : 'Save Quest'}
+            {isLoading ? 'Saving...' : isSaved ? 'Saved' : 'Save'}
         </button>
     );
 };

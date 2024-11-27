@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { getProfile, updateProfile, getReports, generateReport } from '/services/api';
 import DOMPurify from 'dompurify';
 import styles from '../styles/profile.module.css';
-import Image from 'next/image'; // 追加
 
 const EditProfile = () => {
     const [profile, setProfile] = useState({
@@ -57,7 +56,7 @@ const EditProfile = () => {
 
         checkUserStatus();
         fetchProfile();
-    }, [router]); // 依存配列にrouterを追加
+    }, [router]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -72,7 +71,7 @@ const EditProfile = () => {
         e.preventDefault();
         try {
             await updateProfile(profile);
-            router.push('/profile'); // プロフィールページにリダイレクト
+            router.push('/profile');
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -89,22 +88,9 @@ const EditProfile = () => {
                     background: rgb(239, 69, 74);
                 }
             `}</style>
-            <div className="container rounded bg-white mt-5 mb-5">
+            <div className="container rounded bg-white mb-5">
                 <form onSubmit={handleSubmit}>
                     <div className="row">
-                        <div className="col-md-3 border-right">
-                            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                                <Image
-                                    className="rounded-circle mt-5"
-                                    width={150}
-                                    height={150}
-                                    src="/images/15456ce8-639f-402b-a3f1-dbb770156ee6-removebg-preview.png"
-                                    alt="Profile"
-                                />
-                                <span className="font-weight-bold">{profile.first_name} {profile.last_name}</span>
-                                <span className="text-black-50">{profile.email}</span>
-                            </div>
-                        </div>
                         <div className="col-md-5 border-right">
                             <div className="p-3 py-5">
                                 <div className="d-flex justify-content-between align-items-center mb-3">

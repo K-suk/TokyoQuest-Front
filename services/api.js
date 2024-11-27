@@ -1,8 +1,8 @@
 // services/api.js
 import axios from 'axios';
 
-const API_URL = 'https://tokyoquest.onrender.com/api'; // 環境変数の代わりに直接URLを設定
-// const API_URL = 'https://0.0.0.0:8000/api';
+// const API_URL = 'https://tokyoquest.onrender.com/api'; // 環境変数の代わりに直接URLを設定
+const API_URL = 'https://0.0.0.0:8000/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('accessToken');

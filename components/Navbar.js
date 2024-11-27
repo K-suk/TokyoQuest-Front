@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 import LogoutButton from './LogoutButton';
+import Image from 'next/image';
 
 function Navbar() {
   useEffect(() => {
@@ -23,10 +24,12 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#EF454A' }}>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#EF454A'}}>
       <div className="container px-4 px-lg-5">
         <Link href="/" legacyBehavior>
-          <a className="navbar-brand" style={{ color: '#fff' }}>Tokyo Quest</a>
+          <a className="navbar-brand" style={{ color: '#fff' }}>
+            <img src='/images/logoBlackWhite.png' width={100} height={50}></img>
+          </a>
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />

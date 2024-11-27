@@ -51,8 +51,8 @@ const ChangePassword = () => {
             setNewPassword('');
             setConfirmPassword('');
             setTimeout(() => {
-                router.push('/profile'); // プロフィールページにリダイレクト
-            }, 2000); // 2秒後にリダイレクト
+                router.push('/profile');
+            }, 2000);
         } catch (error) {
             setError('Error changing password: ' + (error.response ? error.response.data.detail : error.message));
         }
@@ -60,7 +60,7 @@ const ChangePassword = () => {
 
     return (
         <div className="col-md-6 offset-md-3 mt-4">
-            <div className="card card-outline-secondary">
+            <div className="container">
                 <div className="card-header">
                     <h3 className="mb-0">Change Password</h3>
                 </div>

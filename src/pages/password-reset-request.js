@@ -21,9 +21,17 @@ const PasswordResetRequest = () => {
     };
 
     return (
-        <div className="col-md-6 offset-md-3 mt-5">
-            <div className="card card-outline-secondary">
-                <div className="card-header">
+        <div style={{
+            height: '100vh',
+            backgroundImage: 'url(/images/login.png)', // 背景画像のパスを設定
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
+            <div>
+                <div className="card-header text-white">
                     <h3 className="mb-0">Password Reset</h3>
                 </div>
                 <div className="card-body">
@@ -39,7 +47,7 @@ const PasswordResetRequest = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <span id="helpResetPasswordEmail" className="form-text small text-muted">
+                            <span id="helpResetPasswordEmail" className="form-text small text-white">
                                 Password reset instructions will be sent to this email address.
                             </span>
                         </div>

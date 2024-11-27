@@ -91,7 +91,7 @@ function CompleteQuestButton({ questId, onComplete }) {
       <button 
         onClick={openModal} 
         disabled={isLoading || isCompleted} 
-        className={`btn ${isCompleted ? 'btn-dark text-white' : 'btn-outline-dark'} mt-auto uniform-width ${styles.saveButton}`}
+        className={`btn ${isCompleted ? 'btn-dark text-white' : 'btn-danger'} mt-auto uniform-width ${styles.saveButton} mb-4`}
       >
         {isLoading ? 'Completing...' : isCompleted ? 'Completed' : 'Complete Quest'}
       </button>
